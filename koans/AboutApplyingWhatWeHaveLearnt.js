@@ -40,8 +40,10 @@ describe("About Applying What We Have Learnt", function() {
       var productsICanEat = [];
 
       /* solve using filter() & all() / any() */
-      productsICanEat = products.filter(function() {
-        return !products.containsNuts;
+      productsICanEat = _.filter(products, function(pizza) {
+        if(!_(pizza.ingredients).contains('mushrooms')){
+          return !pizza.containsNuts;
+        }
       });
 
       expect(productsICanEat.length).toBe(1);
@@ -93,6 +95,11 @@ describe("About Applying What We Have Learnt", function() {
     var ingredientCount = { "{ingredient name}": 0 };
 
     /* chain() together map(), flatten() and reduce() */
+    _.chain(products.ingredients).map().flatten().reduce(function(prev, current){
+      if(current === 'mushrooms') {
+        ingredientCount = prev + current;
+      }
+    }, 0);
 
     expect(ingredientCount['mushrooms']).toBe(2);
   });
